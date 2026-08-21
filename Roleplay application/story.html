@@ -87,6 +87,13 @@
       <select id="csSelect" class="cs-select"></select>
       <span class="cs-count" id="csCount"></span>
     </div>
+    <div class="search-bar reveal" id="searchBar">
+      <label class="cs-label" for="searchInput">Search</label>
+      <input type="search" id="searchInput" class="search-input" placeholder="Find a scene, a quote, a character..." autocomplete="off">
+      <span class="search-count" id="searchCount"></span>
+      <button class="search-clear" id="searchClear" aria-label="Clear search" hidden>✕</button>
+    </div>
+    <div id="searchResults" class="search-results" hidden></div>
     <div id="chapterList" class="chapters"></div>
     <nav class="chapter-nav reveal" id="chapterNav" aria-label="Chapter navigation">
       <button class="cn-btn" id="cnPrev">← Previous</button>

@@ -367,10 +367,112 @@
         progressBar.setAttribute('aria-valuenow', Math.round(pct));
       }
       window.addEventListener('scroll', updateProgress, { passive: true });
-      // Also update when switching chapters.
-      const origRender = renderChapter;
-      // Rebind after render to recalculate.
       setTimeout(updateProgress, 50);
+    }
+
+    /* keyword search */
+    const searchInput = $('searchInput');
+    const searchClear = $('searchClear');
+    const searchCount = $('searchCount');
+    const searchResults = $('searchResults');
+    if (searchInput && searchResults) {
+      let searchTimeout = null;
+
+      function escapeRegex(s) {
+        return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp('(' + escapeRegex(query) + ')', 'gi');
+        return text.replace(regex, '<mark class="search-hl">$1</mark>');
+      }
+
+      function doSearch() {
+        const query = searchInput.value.trim();
+        if (!query || query.length < 2) {
+          searchResults.hidden = true;
+          searchResults.innerHTML = '';
+          searchCount.textContent = '';
+          searchClear.hidden = true;
+          chapterList.style.display = '';
+          return;
+        }
+
+        searchClear.hidden = false;
+        const lower = query.toLowerCase();
+        const results = [];
+
+        merged.forEach((ch, ci) => {
+          ch.paragraphs.forEach((p, pi) => {
+            if (p.toLowerCase().includes(lower)) {
+              results.push({ ci, pi, ch, para: p });
+            }
+          });
+        });
+
+        if (results.length === 0) {
+          searchResults.innerHTML = '<p class="search-empty">No results found for \u201c' + esc(query) + '\u201d</p>';
+          searchResults.hidden = false;
+          searchCount.textContent = '0 results';
+          chapterList.style.display = 'none';
+          return;
+        }
+
+        searchCount.textContent = results.length + ' result' + (results.length !== 1 ? 's' : '');
+
+        let html = '';
+        results.slice(0, 100).forEach(r => {
+          const snippet = r.para.length > 200 ? r.para.slice(0, 200) + '...' : r.para;
+          const label = (r.ch.subtitle || 'Ch. ' + (r.ci + 1)) + ' — ' + r.ch.title;
+          html += '<button class="search-item" data-chapter="' + r.ci + '">' +
+            '<span class="search-chapter">' + esc(label) + '</span>' +
+            '<span class="search-snippet">' + highlightText(esc(snippet), query) + '</span>' +
+            '</button>';
+        });
+        if (results.length > 100) {
+          html += '<p class="search-more">...and ' + (results.length - 100) + ' more results</p>';
+        }
+        searchResults.innerHTML = html;
+        searchResults.hidden = true; // show chapter list instead
+        chapterList.style.display = '';
+
+        // Bind click handlers to jump to chapter.
+        searchResults.querySelectorAll('.search-item').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const ci = parseInt(btn.dataset.chapter, 10);
+            goTo(ci, true);
+            searchInput.value = '';
+            searchResults.hidden = true;
+            searchCount.textContent = '';
+            searchClear.hidden = true;
+          });
+        });
+      }
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+      }
+
+      searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(doSearch, 300);
+      });
+
+      searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          doSearch();
+          searchInput.blur();
+        }
+      });
+
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        doSearch();
+      });
     }
   }
 
