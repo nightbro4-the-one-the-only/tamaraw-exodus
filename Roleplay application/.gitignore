@@ -28,3 +28,4 @@ ch21-40-append.js
 # OS files
 .DS_Store
 Thumbs.db
+gh-pages-build/
