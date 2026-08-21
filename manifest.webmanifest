@@ -1,0 +1,19 @@
+{
+  "name": "Tamaraw Exodus",
+  "short_name": "Tamaraw",
+  "description": "A living world for the Tamaraw Exodus novel and roleplay universe.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c1220",
+  "theme_color": "#c9a84c",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

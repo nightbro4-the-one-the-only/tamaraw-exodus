@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Story — Tamaraw Exodus</title>
+<meta name="description" content="Read Tamaraw Exodus — Chapter I, Feats of Unity. The novel itself, chapter by chapter, transcribed from the manuscript.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0c1220">
+<meta property="og:title" content="The Story — Tamaraw Exodus">
+<meta property="og:description" content="Read Tamaraw Exodus — the novel itself, chapter by chapter, transcribed from the manuscript.">
+<meta property="og:image" content="assets/img/cover.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Story — Tamaraw Exodus">
+<meta name="twitter:image" content="assets/img/cover.jpg">
+<link rel="stylesheet" href="styles.css">
+<script>try{if(localStorage.getItem('tx-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- ===================== NAV ===================== -->
+<header class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/img/cover.jpg" alt="" class="brand-mark">
+      <span class="brand-name">Tamaraw&nbsp;Exodus</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a href="story.html">The Story</a>
+      <a href="lore.html">The Lore</a>
+      <a href="rp.html">The Roleplay</a>
+      <a href="author.html">The Author</a>
+      <a href="gm.html">The GM's Desk</a>
+    </nav>
+    <div class="nav-controls">
+      <button class="theme-btn" id="themeToggle" aria-label="Switch to light mode" title="Toggle light / dark">☾</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HERO ===================== -->
+<section class="page-hero" id="top">
+  <div class="page-bg" style="background-image:url('assets/img/concept-01.jpg')"></div>
+  <div class="page-shade"></div>
+  <div class="page-hero-inner">
+    <p class="eyebrow reveal">The story</p>
+    <h1 class="page-title reveal">Read the Story</h1>
+    <p class="page-sub reveal">
+      The novel itself — the source of the world. Chapter by chapter, in the author's voice.
+      Every other page of this site is commentary; this page is the canon.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== READER ===================== -->
+<section class="section" id="reader">
+  <div class="container">
+    <div class="codex-intro reveal">
+      <img class="codex-cover" src="assets/img/cover.jpg" alt="Tamaraw Exodus cover">
+      <div class="codex-text">
+        <p>
+          The text is transcribed from the manuscript and lightly cleaned; the voice is the
+          author's. Words the transcription could not read are marked in brackets
+          — <code>[purpose]</code>, <code>[crew]</code> — so nothing is silently guessed.
+          New chapters appear here as they are written.
+        </p>
+        <p class="codex-note">
+          <strong>How chapters are added:</strong> paste the chapter text into
+          <code>chapters.js</code> and it appears here automatically.
+        </p>
+      </div>
+    </div>
+
+    <div class="reader-toolbar reveal" id="readerBar">
+      <span class="reader-label">Reading size</span>
+      <button class="font-btn" id="fontMinus" aria-label="Decrease font size">A−</button>
+      <span class="font-size" id="fontSizeLabel">17px</span>
+      <button class="font-btn" id="fontPlus" aria-label="Increase font size">A+</button>
+    </div>
+    <div class="chapter-selector reveal" id="chapterSelector">
+      <label class="cs-label" for="csSelect">Chapter</label>
+      <select id="csSelect" class="cs-select"></select>
+      <span class="cs-count" id="csCount"></span>
+    </div>
+    <div class="search-bar reveal" id="searchBar">
+      <label class="cs-label" for="searchInput">Search</label>
+      <input type="search" id="searchInput" class="search-input" placeholder="Find a scene, a quote, a character..." autocomplete="off">
+      <span class="search-count" id="searchCount"></span>
+      <button class="search-clear" id="searchClear" aria-label="Clear search" hidden>✕</button>
+    </div>
+    <div id="searchResults" class="search-results" hidden></div>
+    <div id="chapterList" class="chapters"></div>
+    <nav class="chapter-nav reveal" id="chapterNav" aria-label="Chapter navigation">
+      <button class="cn-btn" id="cnPrev">← Previous</button>
+      <button class="cn-btn cn-next" id="cnNext">Next →</button>
+    </nav>
+    <p class="reader-hint">
+      Keyboard shortcuts: <kbd>←</kbd> <kbd>→</kbd> chapters · <kbd>+</kbd> <kbd>−</kbd> font size
+    </p>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand">TAMARAW EXODUS</p>
+        <p>A novel of the last fleet of Earth.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="story.html">The Story</a>
+        <a href="lore.html">The Lore</a>
+        <a href="rp.html">The Roleplay</a>
+        <a href="author.html">The Author</a>
+      <a href="gm.html">The GM's Desk</a>
+      </nav>
+    </div>
+    <p class="footer-note">
+      Written by Jazzy · Transcribed from the manuscript · The clock keeps turning —
+      <span id="clockFoot">—</span>
+    </p>
+  </div>
+</footer>
+
+<script src="chapters.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

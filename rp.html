@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Roleplay — Tamaraw Exodus</title>
+<meta name="description" content="Enter the world of Tamaraw Exodus. Pick a date before the story begins, from one person to a whole nation — and see the state of the world before you act.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0c1220">
+<meta property="og:title" content="The Roleplay — Tamaraw Exodus">
+<meta property="og:description" content="Enter the world of Tamaraw Exodus. Pick a date before the story begins, from one person to a whole nation.">
+<meta property="og:image" content="assets/img/cover.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Roleplay — Tamaraw Exodus">
+<meta name="twitter:image" content="assets/img/cover.jpg">
+<link rel="stylesheet" href="styles.css">
+<script>try{if(localStorage.getItem('tx-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/img/cover.jpg" alt="" class="brand-mark">
+      <span class="brand-name">Tamaraw&nbsp;Exodus</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a href="story.html">The Story</a>
+      <a href="lore.html">The Lore</a>
+      <a href="rp.html">The Roleplay</a>
+      <a href="author.html">The Author</a>
+      <a href="gm.html">The GM's Desk</a>
+    </nav>
+    <div class="nav-controls">
+      <button class="theme-btn" id="themeToggle" aria-label="Switch to light mode" title="Toggle light / dark">☾</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HERO ===================== -->
+<section class="page-hero" id="top">
+  <div class="page-bg" style="background-image:url('assets/img/concept-02.jpg')"></div>
+  <div class="page-shade"></div>
+  <div class="page-hero-inner">
+    <p class="eyebrow reveal">The roleplay</p>
+    <h1 class="page-title reveal">Choose Your Date</h1>
+    <p class="page-sub reveal">
+      The world is a stage set before a date. Pick a year to begin — every story, from a single
+      person to a whole nation, starts somewhere on this clock. What you see is the state of
+      the world <em>before</em> you act.
+    </p>
+    <div class="world-clock reveal" title="The world moves whether you watch or not.">
+      <span class="clock-label">Time Remaining</span>
+      <span class="clock-read" id="clockRead">—</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WORLD-STATE BANNER ===================== -->
+<section class="world-banner reveal" id="worldBanner" aria-label="The world, as it stands">
+  <div class="container world-banner-inner">
+    <span class="wb-item">
+      <span class="wb-label">Era</span>
+      <span class="wb-value" id="wbEra">The Three Years</span>
+    </span>
+    <span class="wb-item">
+      <span class="wb-label">Day</span>
+      <span class="wb-value" id="wbDay">—</span>
+    </span>
+    <span class="wb-item wb-latest">
+      <span class="wb-label">Latest from the Chronicle</span>
+      <span class="wb-value" id="wbLatest">The world holds its breath.</span>
+    </span>
+  </div>
+</section>
+
+<!-- ===================== SCENARIO ===================== -->
+<section class="section" id="scenario">
+  <div class="container">
+    <p class="kicker reveal">Before the date</p>
+    <h2 class="section-title reveal">The State of the World</h2>
+    <p class="lead reveal">
+      Each era below is a starting point. Read it as the briefing a new player would receive:
+      where the world stands, what is at stake, and what kind of story begins there.
+    </p>
+
+    <div class="scenario-picker reveal">
+      <button class="scenario-btn active" data-era="war">The Long War</button>
+      <button class="scenario-btn" data-era="unity">The Unification</button>
+      <button class="scenario-btn" data-era="years">The Three Years</button>
+      <button class="scenario-btn" data-era="exodus">The Exodus</button>
+    </div>
+
+    <div class="scenario-card reveal" id="scenarioCard">
+      <div class="scenario-state">
+        <span class="scenario-era" id="scEra">Era I · Year −20</span>
+        <h3 id="scTitle">The Long War</h3>
+        <ul id="scPoints">
+          <li>Nations locked in a war with no end; diplomacy has already lost.</li>
+          <li>The Philippines spends its fleets and its islands in the fighting.</li>
+          <li>Every ambition is a reason to keep fighting; every grudge is a reason not to stop.</li>
+          <li>No one is asking what happens after.</li>
+        </ul>
+      </div>
+      <div class="scenario-note" id="scNote">
+        The world still looks like it will last forever. Begin as a soldier, a captain, a
+        nation — and decide what you are willing to spend.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CHRONICLE ===================== -->
+<section class="section" id="chronicle">
+  <div class="container">
+    <p class="kicker reveal">The world so far</p>
+    <h2 class="section-title reveal">The Chronicle</h2>
+    <p class="lead reveal">
+      What has already happened — resolved events from the GM's Desk, newest first. The world
+      does not reset; it remembers. Read it before you write your move, so you know what the
+      world is reacting to.
+    </p>
+    <div class="chronicle reveal" id="rpChronicle">
+      <p class="ledger-empty" id="rpChronicleEmpty">
+        The Chronicle is empty — the first resolved events will appear here as the world
+        begins to move.
+      </p>
+    </div>
+    <p class="desk-note reveal">
+      Maintained by the author from the GM's Desk. Entries appear here the moment they are
+      resolved — no need to refresh.
+    </p>
+    <p class="desk-note reveal" style="margin-top:1em">
+      <strong>Play from Discord:</strong> players submit moves in a Discord channel; the author
+      resolves them at the GM's Desk. See the
+      <a href="DISCORD-GUIDE.md" style="color:var(--gold)">Discord Integration Guide</a>
+      for setup instructions and the move format.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== SUBMIT A MOVE ===================== -->
+<section class="section" id="submitMove">
+  <div class="container">
+    <p class="kicker reveal">Your turn</p>
+    <h2 class="section-title reveal">Submit a Move</h2>
+    <p class="lead reveal">
+      Read the Chronicle above, pick a date and scale, then write your move below. The author
+      will judge the consequence at the GM's Desk and post the result in the Chronicle.
+    </p>
+
+    <form class="move-form reveal" id="moveForm" autocomplete="off">
+      <div class="desk-grid">
+        <label class="field">
+          <span class="field-label">Your name</span>
+          <input type="text" id="mfPlayer" placeholder="e.g. @captainreyes" required>
+        </label>
+        <label class="field">
+          <span class="field-label">Character</span>
+          <input type="text" id="mfChar" placeholder="e.g. Captain Reyes, militia ship" required>
+        </label>
+        <label class="field">
+          <span class="field-label">Location</span>
+          <input type="text" id="mfWhere" placeholder="e.g. the harbor, Manila" required>
+        </label>
+      </div>
+
+      <div class="desk-grid">
+        <label class="field">
+          <span class="field-label">Era</span>
+          <select id="mfEra">
+            <option value="war">Era I · The Long War</option>
+            <option value="unity">Era II · The Unification</option>
+            <option value="years" selected>Era II → III · The Three Years</option>
+            <option value="exodus">Era III · The Exodus</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="field-label">Scale</span>
+          <select id="mfScale">
+            <option value="person">One person</option>
+            <option value="crew">A crew, a ship, a settlement</option>
+            <option value="nation">A whole nation</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field-label">Your move — what does your character do?</span>
+        <textarea id="mfMove" rows="6" placeholder="Write your action in your own words. What does your character do? Where? What do they hope to achieve? Be specific — the world reacts to what you wrote."
+          required></textarea>
+      </label>
+
+      <div class="desk-actions">
+        <button type="submit" class="btn btn-primary" id="mfSend">Send move to the author</button>
+        <button type="button" class="btn" id="mfCopy" title="Copy your move as text">Copy instead</button>
+      </div>
+
+      <div class="mf-status" id="mfStatus" role="status" hidden></div>
+    </form>
+
+    <details class="desk-secret reveal">
+      <summary>Discord webhook setup (optional — sends moves directly to the author's Discord)</summary>
+      <div class="desk-grid">
+        <label class="field field-wide">
+          <span class="field-label">Webhook URL</span>
+          <input type="url" id="mfWebhook" placeholder="https://discord.com/api/webhooks/..." autocomplete="off">
+        </label>
+      </div>
+      <p class="desk-note">
+        If the author provides a Discord webhook URL, paste it here. Your move will be sent
+        directly to the #submit-a-move channel on Discord. The URL is stored only in your
+        browser and never shared. If you leave it blank, your move will be copied to your
+        clipboard instead — paste it into Discord yourself.
+      </p>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== RULES ===================== -->
+<section class="section section-dark" id="rules">
+  <div class="container">
+    <p class="kicker reveal">How the world moves</p>
+    <h2 class="section-title reveal">Cause, Reaction — and Time</h2>
+    <p class="lead reveal">
+      Nothing in this world is instant. Every action is a cause; every consequence is a
+      reaction that arrives on its own day. These are the rules that make it feel real.
+    </p>
+    <div class="card-grid">
+      <article class="card reveal">
+        <h3>Nothing Lands on the Same Day</h3>
+        <p>
+          Every action is a ticket with a due date. A farm takes days to build; a road network
+          takes months; travelling between towns takes hours. The world records what you
+          started and resolves it when the time comes — whether you are watching or not.
+        </p>
+      </article>
+      <article class="card reveal">
+        <h3>Consequences Arrive Late</h3>
+        <p>
+          A battle resolves in a day; the news reaches the next nation in two; the embargo
+          bites in three; the refugees arrive in five. Cause and reaction are never the same
+          event — you always get to see the gap between them.
+        </p>
+      </article>
+      <article class="card reveal">
+        <h3>The World Tells You Before It Happens</h3>
+        <p>
+          "The siege continues — if unbroken, the city falls in four days." You always see
+          what is coming before it lands, and you have exactly that long to act on it.
+        </p>
+      </article>
+      <article class="card reveal">
+        <h3>Every Scale, One World</h3>
+        <p>
+          A person crafts a knife in hours; a guild raises a workshop in weeks; a nation
+          musters an army in months. Your character's prices, safety, and news are shaped by
+          their nation — rippling down through the same clock.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STARTING POINTS ===================== -->
+<section class="section" id="start">
+  <div class="container">
+    <p class="kicker reveal">Before you begin</p>
+    <h2 class="section-title reveal">Pick a Date, Pick a Scale</h2>
+    <p class="lead reveal">
+      The Story page is the canon. The Lore page is the world. Here, you choose when to enter
+      it — and from how far away. Every story below is a different <em>size</em> of the same
+      world, on the same clock.
+    </p>
+    <div class="card-grid">
+      <article class="card reveal">
+        <h3>A Soldier of the Long War</h3>
+        <p>
+          Begin in Era I, as one life among millions. The war is all you have ever known — what
+          you fight for, who you refuse to fight, and what you are willing to spend are yours
+          to decide.
+        </p>
+        <p class="faction-scale"><strong>Scale:</strong> one person.</p>
+      </article>
+      <article class="card reveal">
+        <h3>A Captain of a Militia Ship</h3>
+        <p>
+          Begin in the Exodus era, as the master of one vessel in the forming fleet. Your crew,
+          your cargo, your conscience — and the directive that says the ship comes first.
+        </p>
+        <p class="faction-scale"><strong>Scale:</strong> a crew, a ship, a small settlement.</p>
+      </article>
+      <article class="card reveal">
+        <h3>A Nation Building Its Fleet</h3>
+        <p>
+          Begin in the Three Years, as a nation deciding what to carry through the gate — and
+          what to leave behind. Every choice is measured in ships, seeds, and the people who
+          will not fit.
+        </p>
+        <p class="faction-scale"><strong>Scale:</strong> a nation.</p>
+      </article>
+      <article class="card reveal">
+        <h3>A Stayer in a Temple</h3>
+        <p>
+          Begin as one of the ones who chose faith over the fleet. The gate is a lie; the
+          rapture is coming; the world is ending, and you are certain you will live forever.
+          The story has not decided whether you are right.
+        </p>
+        <p class="faction-scale"><strong>Scale:</strong> one shrine — or a world that chose to stay.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand">TAMARAW EXODUS</p>
+        <p>A novel of the last fleet of Earth.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="story.html">The Story</a>
+        <a href="lore.html">The Lore</a>
+        <a href="rp.html">The Roleplay</a>
+        <a href="author.html">The Author</a>
+      <a href="gm.html">The GM's Desk</a>
+      </nav>
+    </div>
+    <p class="footer-note">
+      Written by Jazzy · Transcribed from the manuscript · The clock keeps turning —
+      <span id="clockFoot">—</span>
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
