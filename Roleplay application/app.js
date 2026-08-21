@@ -317,6 +317,33 @@
     fontMinus.addEventListener('click', () => { size = Math.max(14, size - 1); applyFont(); });
     fontPlus.addEventListener('click', () => { size = Math.min(22, size + 1); applyFont(); });
 
+    /* keyboard shortcuts */
+    document.addEventListener('keydown', e => {
+      // Ignore when typing in an input, textarea, or select.
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+      // Ignore if the lightbox is open (it handles its own keys).
+      const lb = $('lightbox');
+      if (lb && !lb.hidden) return;
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goTo(current - 1, true);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goTo(current + 1, true);
+      } else if (e.key === '+' || e.key === '=') {
+        e.preventDefault();
+        size = Math.min(22, size + 1); applyFont();
+      } else if (e.key === '-' || e.key === '_') {
+        e.preventDefault();
+        size = Math.max(14, size - 1); applyFont();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
     renderToc();
     renderChapter();
     if (merged.length < 2) chapterNav.hidden = true;
