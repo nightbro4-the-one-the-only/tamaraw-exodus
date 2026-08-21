@@ -434,7 +434,7 @@
           html += '<p class="search-more">...and ' + (results.length - 100) + ' more results</p>';
         }
         searchResults.innerHTML = html;
-        searchResults.hidden = true; // show chapter list instead
+        searchResults.hidden = false;
         chapterList.style.display = '';
 
         // Bind click handlers to jump to chapter.
