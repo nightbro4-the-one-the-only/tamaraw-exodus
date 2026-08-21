@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The GM's Desk — Tamaraw Exodus</title>
+<meta name="description" content="The author's tool: assemble the world state and a player's move into a GM prompt, draft consequences with an AI assistant, and track pending reactions on the world clock.">
+<link rel="icon" href="assets/img/cover.jpg">
+<link rel="stylesheet" href="styles.css">
+<script>try{if(localStorage.getItem('tx-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/img/cover.jpg" alt="" class="brand-mark">
+      <span class="brand-name">Tamaraw&nbsp;Exodus</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a href="story.html">The Story</a>
+      <a href="lore.html">The Lore</a>
+      <a href="rp.html">The Roleplay</a>
+      <a href="author.html">The Author</a>
+      <a href="gm.html">The GM's Desk</a>
+    </nav>
+    <div class="nav-controls">
+      <button class="theme-btn" id="themeToggle" aria-label="Switch to light mode" title="Toggle light / dark">☾</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HERO ===================== -->
+<section class="page-hero" id="top">
+  <div class="page-bg" style="background-image:url('assets/img/concept-01.jpg')"></div>
+  <div class="page-shade"></div>
+  <div class="page-hero-inner">
+    <p class="eyebrow reveal">For the author's eyes</p>
+    <h1 class="page-title reveal">The GM's Desk</h1>
+    <p class="page-sub reveal">
+      Every player move is a cause. This desk drafts the reaction — set the world state,
+      paste the move, and let the assistant write the consequence on the world's clock.
+      You hold the pen: edit everything before it becomes real.
+    </p>
+    <div class="world-clock reveal" title="The world moves whether you watch or not.">
+      <span class="clock-label">Time Remaining</span>
+      <span class="clock-read" id="clockRead">—</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE DESK ===================== -->
+<section class="section" id="gmDesk">
+  <div class="container desk-container">
+
+    <p class="kicker reveal">Step 1</p>
+    <h2 class="section-title reveal">The World, As It Stands</h2>
+    <p class="lead reveal">
+      Set where the world is right now. This is what the assistant judges the move against —
+      the four rules come built in.
+    </p>
+
+    <div class="desk-grid reveal">
+      <label class="field">
+        <span class="field-label">Era</span>
+        <select id="gmEra">
+          <option value="war">Era I · The Long War (Year −20)</option>
+          <option value="unity">Era II · The Unification (Year 0)</option>
+          <option value="years" selected>Era II → III · The Three Years (Years 0–3)</option>
+          <option value="exodus">Era III · The Exodus (Manila port)</option>
+        </select>
+      </label>
+      <label class="field">
+        <span class="field-label">Current day (in-story)</span>
+        <input type="text" id="gmDay" placeholder="e.g. Year 2 of 3 · Day 140">
+      </label>
+      <label class="field">
+        <span class="field-label">Scale of this move</span>
+        <select id="gmScale">
+          <option value="person">One person</option>
+          <option value="crew">A crew, a ship, a settlement</option>
+          <option value="nation" selected>A whole nation</option>
+        </select>
+      </label>
+    </div>
+
+    <label class="field reveal">
+      <span class="field-label">Recent events — the Chronicle so far (what the world has already seen)</span>
+      <textarea id="gmEvents" rows="4" placeholder="Day 229 — the Tamaraw takes on her first refugees; the directive's couriers leave for the highlands.&#10;Day 231 — the barges are full; the gate flares without warning at dusk."></textarea>
+    </label>
+
+    <label class="field reveal">
+      <span class="field-label">Pending consequences (tickets already in the world, with their due days)</span>
+      <textarea id="gmPending" rows="3" placeholder="e.g. — the couriers reach the highlands in 2 days · the gate flare is unexplained · the harbor militia hears the rumor in 3 days"></textarea>
+    </label>
+
+    <p class="kicker reveal" style="margin-top:2.5em">Step 2</p>
+    <h2 class="section-title reveal">The Move</h2>
+
+    <div class="desk-grid reveal">
+      <label class="field">
+        <span class="field-label">Player</span>
+        <input type="text" id="gmPlayer" placeholder="Who sent this move">
+      </label>
+      <label class="field">
+        <span class="field-label">Character</span>
+        <input type="text" id="gmChar" placeholder="e.g. Second Mate Ilang, of the militia ship">
+      </label>
+      <label class="field">
+        <span class="field-label">Location</span>
+        <input type="text" id="gmWhere" placeholder="e.g. the harbor, Manila">
+      </label>
+    </div>
+
+    <label class="field reveal">
+      <span class="field-label">The move itself (paste it as written)</span>
+      <textarea id="gmMove" rows="5" placeholder="I take the militia ship out past the breakwater and hail the gate — I want to see what the flare was, and I'm not waiting for permission."></textarea>
+    </label>
+
+    <div class="desk-actions reveal">
+      <button class="btn btn-primary" id="gmDraft">✒ Draft consequence with AI</button>
+      <button class="btn" id="gmCopyPrompt">Copy prompt instead (no AI key)</button>
+    </div>
+    <p class="desk-note" id="gmKeyHint">
+      No API key yet? Paste an OpenRouter key below — free models are available — or use
+      "Copy prompt" and draft the consequence with any AI chat you like.
+    </p>
+
+    <p class="kicker reveal" style="margin-top:2.5em">Step 3</p>
+    <h2 class="section-title reveal">The Draft</h2>
+    <div id="gmOut" class="gm-out" hidden>
+      <label class="field">
+        <span class="field-label">Draft — edit freely before it becomes real</span>
+        <textarea id="gmDraftText" rows="10"></textarea>
+      </label>
+      <div class="desk-actions">
+        <button class="btn btn-primary" id="gmApprove">✓ Approve — add to the Ledger</button>
+        <button class="btn" id="gmCopyDraft">Copy draft</button>
+      </div>
+    </div>
+    <p class="desk-status" id="gmStatus" role="status"></p>
+
+    <p class="kicker reveal" style="margin-top:2.5em">The Ledger</p>
+    <h2 class="section-title reveal">Pending Consequences</h2>
+    <p class="lead reveal">
+      Every approved consequence is a ticket with a due day. When its day comes, resolve it —
+      the world moves on.
+    </p>
+    <div class="ledger reveal" id="gmLedger">
+      <p class="ledger-empty" id="gmLedgerEmpty">Nothing pending. The world waits.</p>
+    </div>
+
+    <p class="kicker reveal" style="margin-top:2.5em">The Chronicle</p>
+    <h2 class="section-title reveal">What Has Happened</h2>
+    <p class="lead reveal">
+      Resolved events, oldest to newest. Copy the Chronicle to post it on the Roleplay page,
+      or paste it back into "Recent events" above to keep the world state alive.
+    </p>
+    <div class="chronicle reveal" id="gmChronicle">
+      <p class="ledger-empty" id="gmChronicleEmpty">The Chronicle is empty — the story begins when you judge the first move.</p>
+    </div>
+    <div class="desk-actions reveal" style="margin-top:1em">
+      <button class="btn" id="gmCopyChronicle">Copy Chronicle</button>
+    </div>
+
+    <!-- ============ API key (stays in this browser only) ============ -->
+    <details class="desk-secret reveal">
+      <summary>AI setup — API key &amp; model</summary>
+      <div class="desk-grid">
+        <label class="field field-wide">
+          <span class="field-label">OpenRouter API key (stored only in this browser)</span>
+          <input type="password" id="gmKey" placeholder="sk-or-v1-…" autocomplete="off">
+        </label>
+        <label class="field field-wide">
+          <span class="field-label">Model</span>
+          <select id="gmModel">
+            <option value="openrouter/free" selected>openrouter/free — routes to free models ($0)</option>
+            <option value="google/gemini-2.0-flash-exp:free">google/gemini-2.0-flash-exp:free</option>
+            <option value="meta-llama/llama-3.3-70b-instruct:free">meta-llama/llama-3.3-70b-instruct:free</option>
+            <option value="deepseek/deepseek-chat-v3-0324:free">deepseek/deepseek-chat-v3-0324:free</option>
+            <option value="google/gemini-2.5-flash">google/gemini-2.5-flash (paid, best quality)</option>
+          </select>
+        </label>
+      </div>
+      <p class="desk-note">
+        Get a free key at openrouter.ai/keys. Free models work with $0 balance (rate-limited);
+        a small prepaid credit unlocks the paid models. The key never leaves your browser and is
+        never sent anywhere except to OpenRouter. Don't publish this page publicly while the
+        key mechanism is enabled.
+      </p>
+    </details>
+
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand">TAMARAW EXODUS</p>
+        <p>A novel of the last fleet of Earth.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="story.html">The Story</a>
+        <a href="lore.html">The Lore</a>
+        <a href="rp.html">The Roleplay</a>
+        <a href="author.html">The Author</a>
+        <a href="gm.html">The GM's Desk</a>
+      </nav>
+    </div>
+    <p class="footer-note">
+      Written by Jazzy · Transcribed from the manuscript · The clock keeps turning —
+      <span id="clockFoot">—</span>
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

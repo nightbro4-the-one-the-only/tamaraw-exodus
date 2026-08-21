@@ -1,0 +1,30 @@
+# Build tools and scripts
+tools/
+*.sh
+*.ps1
+*.py
+
+# Manuscript source files
+manuscript/
+*.pdf
+*.txt
+*.svg
+
+# Temporary files
+*.log
+*.err
+*.tmp
+*.bak
+
+# Freebuff internal
+.freebuff/
+run.md
+
+# Server files
+server.ps1
+ch21-40-*.js
+ch21-40-append.js
+
+# OS files
+.DS_Store
+Thumbs.db
