@@ -12,12 +12,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
 
-      - name: Copy site files
-        run: cp -r "Roleplay application"/* site/
-        shell: bash
+      - name: Prepare site directory
+        run: |
+          mkdir -p site
+          cd "Roleplay application"
+          cp -r index.html story.html lore.html rp.html author.html gm.html app.js styles.css chapters.js DISCORD-GUIDE.md README.md ../site/
+          cp -r assets ../site/
+          touch ../site/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
