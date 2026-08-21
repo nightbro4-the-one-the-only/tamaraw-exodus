@@ -322,12 +322,17 @@
 
     /* keyboard shortcuts */
     document.addEventListener('keydown', e => {
-      // Ignore when typing in an input, textarea, or select.
-      const tag = (e.target.tagName || '').toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
       // Ignore if the lightbox is open (it handles its own keys).
       const lb = $('lightbox');
       if (lb && !lb.hidden) return;
+
+      const tag = (e.target.tagName || '').toLowerCase();
+      const isSearchInput = e.target.id === 'searchInput';
+
+      // Ignore regular typing in inputs/textareas/selects,
+      // but still allow Escape and chapter shortcuts when search is focused.
+      if ((tag === 'textarea' || tag === 'select') && !e.ctrlKey && !e.metaKey) return;
+      if (tag === 'input' && !isSearchInput && !e.ctrlKey && !e.metaKey) return;
 
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
@@ -335,10 +340,10 @@
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
         goTo(current + 1, true);
-      } else if (e.key === '+' || e.key === '=') {
+      } else if ((e.key === '+' || e.key === '=') && !isSearchInput) {
         e.preventDefault();
         size = Math.min(22, size + 1); applyFont();
-      } else if (e.key === '-' || e.key === '_') {
+      } else if ((e.key === '-' || e.key === '_') && !isSearchInput) {
         e.preventDefault();
         size = Math.max(14, size - 1); applyFont();
       } else if (e.key === 'Home') {
