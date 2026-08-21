@@ -300,6 +300,9 @@
       cnPrev.disabled = current === 0;
       cnNext.disabled = current === merged.length - 1;
       applyFont();
+      // Reset progress bar on chapter change.
+      const progressFill = $('progressFill');
+      if (progressFill) { progressFill.style.width = '0%'; }
     }
 
     function goTo(i, scroll) {
@@ -347,6 +350,28 @@
     renderToc();
     renderChapter();
     if (merged.length < 2) chapterNav.hidden = true;
+
+    /* reading progress bar */
+    const progressFill = $('progressFill');
+    const progressBar = $('progressBar');
+    if (progressFill && progressBar) {
+      function updateProgress() {
+        const chapter = chapterList.querySelector('.chapter');
+        if (!chapter) return;
+        const rect = chapter.getBoundingClientRect();
+        const top = rect.top + window.scrollY;
+        const height = rect.height;
+        const scrolled = window.scrollY - top + window.innerHeight * 0.3;
+        const pct = Math.max(0, Math.min(100, (scrolled / height) * 100));
+        progressFill.style.width = pct + '%';
+        progressBar.setAttribute('aria-valuenow', Math.round(pct));
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      // Also update when switching chapters.
+      const origRender = renderChapter;
+      // Rebind after render to recalculate.
+      setTimeout(updateProgress, 50);
+    }
   }
 
   /* ---------- the GM's desk (gm.html) ---------- */
