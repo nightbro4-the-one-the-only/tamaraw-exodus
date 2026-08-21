@@ -19,7 +19,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./Roleplay application
           publish_branch: gh-pages
           force_orphan: true
-          exclude_files: '.gitignore,tools/**,manuscript/**,*.ps1,*.sh,*.log,*.err,.freebuff/**,run.md,gh-pages-build/**'
